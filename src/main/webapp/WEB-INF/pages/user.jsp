@@ -8,9 +8,15 @@
         <div class="col-md-6">
           <div class="card mb-4 box-shadow">
             <form style="padding: 10px;">
-              <div class="form-group">
-                <label for="userName">Username</label>
-                <input type="text" class="form-control" id="userName" disabled="disabled" value="${user.username}">
+              <div class="form-row">
+                <div class="col">
+                  <label for="userName">Username</label>
+                  <input type="text" class="form-control" id="userName" disabled="disabled" value="${user.username}">
+                </div>
+                <div class="col">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" id="email" disabled="disabled" value="${user.email}">
+                </div>
               </div>
               <div class="form-row">
                 <div class="col">
@@ -22,17 +28,6 @@
                   <input type="text" class="form-control" id="lastName" disabled="disabled" value="${user.lastName}">
                 </div>
               </div>
-              <div class="form-row">
-                <div class="col">
-                  <label for="email">Email address</label>
-                  <input type="email" class="form-control" id="email" disabled="disabled" value="${user.email}">
-                </div>
-                <div class="col">
-                  <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" disabled="disabled" value="${user.password}">
-                </div>
-              </div>
-              <!-- <button type="submit" class="btn btn-primary" disabled>Update</button> -->
             </form>
           </div>
         </div>

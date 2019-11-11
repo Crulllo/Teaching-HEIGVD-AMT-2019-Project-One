@@ -58,10 +58,12 @@ public class ServletHome extends HttpServlet {
                 int filmId = Integer.parseInt(request.getParameter("filmId"));
                 Film film = filmsDAO.findById((long)filmId);
                 Preference pref = Preference.builder().user(user).film(film).build();
-                try {
-                    preferencesDAO.create(pref);
-                } catch (DuplicateKeyException e) {
-                    e.printStackTrace();
+                if(preferencesDAO.findByKeys(filmId, username) == null) {
+                    try {
+                        preferencesDAO.create(pref);
+                    } catch (DuplicateKeyException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         } catch (KeyNotFoundException e) {
