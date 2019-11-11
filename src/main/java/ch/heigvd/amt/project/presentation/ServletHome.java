@@ -41,7 +41,7 @@ public class ServletHome extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //List<Film> films = filmsManager.getAllFilms();
 
-        /*List<Film> films = new LinkedList<>();
+        List<Film> films = new LinkedList<>();
         try {
             films = filmsDAO.findAll();
         } catch (KeyNotFoundException e) {
@@ -49,9 +49,10 @@ public class ServletHome extends HttpServlet {
         }
 
         request.setAttribute("films", films);
-        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);*/
-
-        int page = 1;
+        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
+      
+      /*int page = 1;
+        int nbFilmsPerPage = 8;
         if(request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
@@ -82,6 +83,6 @@ public class ServletHome extends HttpServlet {
         request.setAttribute("films", films);
         request.setAttribute("nbPages", nbPages);
         request.setAttribute("currentPage", page);
-        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);*/
     }
 }

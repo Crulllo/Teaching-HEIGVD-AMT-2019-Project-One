@@ -17,7 +17,7 @@ public class FilterSecurity implements Filter {
 
         boolean isTargetUrlProtected = true;
 
-        if ("/login".equals(path)) {
+        if ("/login".equals(path) || path.startsWith("/ArquillianServletRunner") || path.startsWith("/assets")) {
             isTargetUrlProtected = false;
         } else {
             req.setAttribute("targetUrl", path);
