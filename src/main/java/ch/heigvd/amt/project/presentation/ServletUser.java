@@ -24,18 +24,15 @@ import java.util.List;
 public class ServletUser extends HttpServlet {
 
     @EJB
-    IUsersDAO usersDAO;
     IPreferencesDAO preferencesDAO;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = (User)request.getSession().getAttribute("user");
-        String username = "";
+        String username = (String)request.getSession().getAttribute("principal");
         List<Film> films = null;
 
-        if (user == null) {
+        if (username == null) {
             response.sendRedirect("/login"); // Not logged in, redirect to login page.
         } else {
-            username = user.getUsername(); // Get current username
             try {
                 films = preferencesDAO.findAllByUsername(username);
             } catch (KeyNotFoundException e) {
@@ -48,6 +45,20 @@ public class ServletUser extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = (String)request.getSession().getAttribute("principal");
+        List<Film> films = null;
 
+        if (username == null) {
+            response.sendRedirect("/login"); // Not logged in, redirect to login page.
+        } else {
+            try {
+                films = preferencesDAO.findAllByUsername(username);
+            } catch (KeyNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            request.setAttribute("films", films);
+            request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
+        }
     }
 }
