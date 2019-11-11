@@ -35,12 +35,12 @@ public class FilmsManager implements FilmsManagerLocal {
     }
 
     @Override
-    public List<Film> getFilmsBetween(int idFilm1, int idFilm2) {
-        if(idFilm2 > library.size()) {
-            idFilm2 = library.size();
+    public List<Film> getFilmsFrom(int id, int limit) {
+        if(id + limit > library.size()) {
+            limit = library.size() - id;
         }
         List<Film> films = new LinkedList<>();
-        for(int i = idFilm1; i < idFilm2; i++){
+        for(int i = id; i < id + limit; i++){
             Film film = library.get(i);
             films.add(film);
         }

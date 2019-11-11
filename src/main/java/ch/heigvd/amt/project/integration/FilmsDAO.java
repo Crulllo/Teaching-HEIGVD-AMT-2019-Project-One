@@ -172,13 +172,13 @@ public class FilmsDAO implements IFilmsDao {
     }
 
     @Override
-    public List<Film> findBetween(long id1, long id2) throws KeyNotFoundException {
+    public List<Film> findFrom(long id, long limit) throws KeyNotFoundException {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_films WHERE ID >= ? AND ID < ?");
-            statement.setString(1, String.valueOf(id1));
-            statement.setString(2, String.valueOf(id2));
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_films WHERE ID >= ? ORDER BY ID LIMIT ?");
+            statement.setString(1, String.valueOf(id));
+            statement.setLong(2, limit);
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
             if (!hasRecord) {
@@ -186,7 +186,7 @@ public class FilmsDAO implements IFilmsDao {
             }
             List<Film> requestedFilms = new LinkedList<>();
 
-            while (rs.next()) {
+            do {
                 Film existingFilm = Film.builder()
                         .id(Long.parseLong(rs.getString("ID")))
                         .title(rs.getString("TITLE"))
@@ -195,7 +195,7 @@ public class FilmsDAO implements IFilmsDao {
                         .director(rs.getString("DIRECTOR"))
                         .build();
                 requestedFilms.add(existingFilm);
-            }
+            } while (rs.next());
             return requestedFilms;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -24,5 +24,5 @@ public interface FilmsManagerLocal {
      * Get films between 2 ids
      * @return films between 2 ids
      */
-    List<Film> getFilmsBetween(int idFilm1, int idFilm2);
+    List<Film> getFilmsFrom(int id, int limit);
 }

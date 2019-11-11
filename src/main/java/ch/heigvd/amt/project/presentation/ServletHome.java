@@ -43,13 +43,13 @@ public class ServletHome extends HttpServlet {
         if(request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        int filmsPerPage = 8;
+        long filmsPerPage = 8;
         List<Film> films = null;
         int nbPages = 0;
 
         try {
             int nbFilms = filmsDAO.findAll().size();
-            films = filmsDAO.findBetween((page - 1) * filmsPerPage + 1, page * filmsPerPage + 1);
+            films = filmsDAO.findFrom((page - 1) * filmsPerPage + 1, filmsPerPage);
             nbPages = (int) Math.ceil(nbFilms * 1.0 / filmsPerPage);
 
             String username = (String)request.getSession().getAttribute("principal");
@@ -57,9 +57,9 @@ public class ServletHome extends HttpServlet {
             if(request.getParameter("filmId") != null) {
                 int filmId = Integer.parseInt(request.getParameter("filmId"));
                 Film film = filmsDAO.findById((long)filmId);
-                Preference pref = Preference.builder().user(user).film(film).build();   // TODO : DOESNT WORK
+                Preference pref = Preference.builder().user(user).film(film).build();
                 try {
-                    preferencesDAO.create(pref);                                        // TODO : DOESNT WORK
+                    preferencesDAO.create(pref);
                 } catch (DuplicateKeyException e) {
                     e.printStackTrace();
                 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Local
 public interface IFilmsDao extends IDAO<Long, Film> {
-    List<Film> findBetween(long id1, long id2) throws KeyNotFoundException;
+    List<Film> findFrom(long id, long limit) throws KeyNotFoundException;
 
     /**
      * Used for testing purposes only. Ids are auto managed by the db.
