@@ -12,7 +12,6 @@ INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES 
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user2', 'Bob', 'Hope', 'hope@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user3', 'Mickey', 'Mouse', 'mickey@email.com', 'asdw');
 
-INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (1, 'user1');
 
 INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (2, 'user1');
 INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (1, 'user1');
