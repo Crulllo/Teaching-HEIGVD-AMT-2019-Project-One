@@ -1,6 +1,5 @@
 package ch.heigvd.amt.project.presentation;
 
-import ch.heigvd.amt.project.business.FilmsManagerLocal;
 import ch.heigvd.amt.project.datastore.exceptions.KeyNotFoundException;
 import ch.heigvd.amt.project.integration.IFilmsDao;
 import ch.heigvd.amt.project.model.Film;

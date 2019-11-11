@@ -65,7 +65,7 @@ public class PreferencesDAO implements IPreferencesDAO {
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
             if(!hasRecord) {
-                return null;
+                throw new KeyNotFoundException("Could not find Prefenrece with film_id " + filmId + " for user " + username);
             }
 
             Film film = filmsDao.findById(Long.parseLong(rs.getString("FILM_ID")));

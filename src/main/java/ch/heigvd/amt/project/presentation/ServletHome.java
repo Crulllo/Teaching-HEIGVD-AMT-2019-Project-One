@@ -18,9 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
-//TODO: Page navigation
 @WebServlet(name = "ServletHome", urlPatterns = "/home")
 public class ServletHome extends HttpServlet {
 
@@ -57,13 +58,12 @@ public class ServletHome extends HttpServlet {
                 int filmId = Integer.parseInt(request.getParameter("filmId"));
                 Film film = filmsDAO.findById((long)filmId);
                 Preference pref = Preference.builder().user(user).film(film).build();
-                if(preferencesDAO.findByKeys(filmId, username) == null) {
-                    try {
-                        preferencesDAO.create(pref);
-                    } catch (DuplicateKeyException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    Preference preference = preferencesDAO.create(pref);
+                } catch (DuplicateKeyException e) {
+                    Logger.getLogger(ServletHome.class.getSimpleName()).log(Level.SEVERE, "Error", e);
                 }
+
             }
         } catch (KeyNotFoundException | SQLException e) {
             e.printStackTrace();

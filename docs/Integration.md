@@ -1,0 +1,3 @@
+# Integration
+
+This is the tier that acts as a link between our datastore and our application frontend. Here we have to properly define our Data access objects (DAO) for each of our entities. They will stay unchanged even if we decide to migrate our application somewhere with a different configuration (this is known as the DAO pattern). <br> They will also act as EJB Components throughout our application, used whenever we need to perform fetch, delete, update or create methods on our entities wherever in the application. <br> <br>
