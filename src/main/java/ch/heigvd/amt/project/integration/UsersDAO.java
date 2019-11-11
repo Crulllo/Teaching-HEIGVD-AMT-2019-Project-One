@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 // TODO: remove errors, log them instead
@@ -45,8 +46,7 @@ public class UsersDAO implements IUsersDAO {
             statement.execute();
             return entity;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            throw new DuplicateKeyException(e.getMessage());
         } finally {
             closeConnection(con);
         }
@@ -80,7 +80,7 @@ public class UsersDAO implements IUsersDAO {
         }
     }
 
-    // TODO: delete in preferences too
+    // TODO: check delete in preferences too
     @Override
     public void deleteById(String username) throws KeyNotFoundException {
         Connection con = null;
@@ -100,10 +100,36 @@ public class UsersDAO implements IUsersDAO {
         }
     }
 
-    // TODO:
     @Override
-    public List<User> findAll() throws KeyNotFoundException {
-        return null;
+    public List<User> findAll() throws KeyNotFoundException, SQLException {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_users");
+            ResultSet rs = statement.executeQuery();
+            boolean hasRecord = rs.next();
+            if(!hasRecord) {
+                throw new KeyNotFoundException("Could not find any users");
+            }
+            List<User> existingUsers = new LinkedList<>();
+
+            do {
+                User user = User.builder()
+                        .username(rs.getString("USERNAME"))
+                        .firstName(rs.getString("FIRST_NAME"))
+                        .lastName(rs.getString("LAST_NAME"))
+                        .email(rs.getString("EMAIL"))
+                        .admin(rs.getBoolean("IS_ADMIN"))
+                        .build();
+                existingUsers.add(user);
+            } while (rs.next());
+
+            return existingUsers;
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     @Override
@@ -144,8 +170,8 @@ public class UsersDAO implements IUsersDAO {
             String hashed = rs.getString(1);
             boolean isAdmin = Boolean.parseBoolean(rs.getString(2));
             // TODO: remettre
-            //return isAdmin || authenticationService.checkPassword(pass, hashed);
-            return pass.equals(hashed);
+            return isAdmin || authenticationService.checkPassword(pass, hashed);
+            //return pass.equals(hashed);
         } catch (SQLException | KeyNotFoundException e) {
             e.printStackTrace();
             throw new Error(e);

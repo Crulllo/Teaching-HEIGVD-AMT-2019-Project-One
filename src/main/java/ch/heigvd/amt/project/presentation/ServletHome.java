@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,7 +31,12 @@ public class ServletHome extends HttpServlet {
 
     @EJB
     IUsersDAO usersDAO;
+
+    @EJB
     IPreferencesDAO preferencesDAO;
+
+    @EJB
+    IFilmsDao filmsDAO;
 
     final int FILMS_PER_PAGE = 8;
 
@@ -44,7 +50,7 @@ public class ServletHome extends HttpServlet {
         List<Film> films = new LinkedList<>();
         try {
             films = filmsDAO.findAll();
-        } catch (KeyNotFoundException e) {
+        } catch (KeyNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
