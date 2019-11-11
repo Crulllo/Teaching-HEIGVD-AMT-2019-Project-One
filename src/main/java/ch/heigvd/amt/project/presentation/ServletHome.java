@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class ServletHome extends HttpServlet {
                     e.printStackTrace();
                 }
             }
-        } catch (KeyNotFoundException e) {
+        } catch (KeyNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 
