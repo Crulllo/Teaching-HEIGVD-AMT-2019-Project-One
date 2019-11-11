@@ -69,8 +69,7 @@ public class UsersDAO implements IUsersDAO {
                     .firstName(rs.getString(2))
                     .lastName(rs.getString(3))
                     .email(rs.getString(4))
-                    .password(rs.getString(5))
-                    .admin(Boolean.parseBoolean(rs.getString(6)))
+                    .admin(Boolean.parseBoolean(rs.getString(5)))
                     .build();
             return existingUser;
         } catch (SQLException e) {
