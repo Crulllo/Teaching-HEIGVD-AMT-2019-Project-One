@@ -77,7 +77,7 @@
             </ul>
         </nav>
         <p class="float-right">
-            <a href="#">Back to top</a>
+            <a href="home?page=${currentPage}">Back to top</a>
         </p>
     </div>
 </footer>

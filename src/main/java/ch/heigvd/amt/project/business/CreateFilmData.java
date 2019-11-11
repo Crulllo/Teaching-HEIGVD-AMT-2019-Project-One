@@ -50,10 +50,11 @@ public class CreateFilmData {
                 "ID", "TITLE", "RUNNING_TIME", "PATH_TO_POSTER", "DIRECTOR"
         });
         int counter = 20;
+        int max = 100;
 
-        for(int i = 0; i < 1000000; i++) {
+        for(int i = 0; i < max; i++) {
             dataLines.add(new String[]
-                    {String.valueOf(counter), "film" + random.nextInt(10000), String.valueOf(random.nextInt(200)),
+                    {String.valueOf(counter), "film" + random.nextInt(max), String.valueOf(random.nextInt(200)),
                             pathsToPosters[random.nextInt(9)], directors[random.nextInt(4)] });
             counter ++;
         }
