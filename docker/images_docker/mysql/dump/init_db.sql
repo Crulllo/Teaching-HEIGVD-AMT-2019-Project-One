@@ -11,7 +11,7 @@ INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('Jo
 INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('Star Wars: The Rise of Skywalker', 155, 'star_wars.jpg', 'J.J. Abrams');
 INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('You''ve Got mail', 119, 'you''ve_got_mail.jpg', 'Nora Ephron');
 
-INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN) VALUES ('admin', 'admin', 'admin', 'admin@email.com', 'password', true);
+INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN) VALUES ('admin_boi', 'admin', 'admin', 'admin@email.com', 'password', true);
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user1', 'Bob', 'Dylan', 'dylan@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user2', 'Bob', 'Hope', 'hope@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user3', 'Mickey', 'Mouse', 'mickey@email.com', 'asdw');

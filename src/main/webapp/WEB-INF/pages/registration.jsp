@@ -48,7 +48,7 @@
         <input type="password" name ="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <label for="inputPasswordConfirm" class="sr-only">Confirm Password</label>
         <input type="password" name ="passwordConfirm" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
     </form>
     <c:if test="${errs != null}">
         <ul>

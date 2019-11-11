@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // TODO:  save Error messages
 @Stateless
@@ -39,8 +41,7 @@ public class FilmsDAO implements IFilmsDao {
             statement.execute();
             return entity;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            throw new DuplicateKeyException("Film already registered");
         } finally {
             closeConnection(connection);
         }
@@ -60,11 +61,11 @@ public class FilmsDAO implements IFilmsDao {
             statement.execute();
             return film;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     @Override
@@ -88,11 +89,11 @@ public class FilmsDAO implements IFilmsDao {
                     .build();
             return existingFilm;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     @Override
@@ -111,8 +112,7 @@ public class FilmsDAO implements IFilmsDao {
                 throw new KeyNotFoundException("Could not find film with film_id = " + entity.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
@@ -131,8 +131,7 @@ public class FilmsDAO implements IFilmsDao {
                 throw new KeyNotFoundException("Could not find film with film_id = " + id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
@@ -164,11 +163,11 @@ public class FilmsDAO implements IFilmsDao {
 
             return  existingFilms;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     @Override
@@ -198,11 +197,11 @@ public class FilmsDAO implements IFilmsDao {
             } while (rs.next());
             return requestedFilms;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(FilmsDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     private void closeConnection(Connection connection) {
