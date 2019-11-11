@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-md-6">
           <div class="card mb-4 box-shadow">
-            <form>
+            <form style="padding: 10px;">
               <div class="form-group">
                 <label for="userName">Username</label>
                 <input type="text" class="form-control" id="userName" disabled="disabled" value="${user.username}">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col">
                   <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" disabled="disabled" value="${user.password}">
+                  <input type="text" class="form-control" id="password" disabled="disabled" value="${user.password}">
                 </div>
               </div>
               <!-- <button type="submit" class="btn btn-primary" disabled>Update</button> -->
@@ -44,12 +44,14 @@
                 <thead>
                   <tr>
                     <th scope="col">Liked films</th>
+                    <th scope="col" style="width: 60%;"></th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${films}" var="film">
                   <tr>
-                    <th scope="row"><img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 100%; width: 100%; display: block;" src="./assets/img/${film.moviePosterPath}" ></th> <!-- film poster -->
+                    <th scope="row"><img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 150px; width: 100%; display: block;" src="./assets/img/${film.moviePosterPath}" ></th> <!-- film poster -->
                     <td class="card-text">${film.title}</td>
                     <td><a class="btn btn-sm btn-outline-secondary" href="film?id=${film.id}">View</a></td>
                   </tr>

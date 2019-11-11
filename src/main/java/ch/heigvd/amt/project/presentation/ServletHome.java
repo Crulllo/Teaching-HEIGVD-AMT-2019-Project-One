@@ -49,18 +49,17 @@ public class ServletHome extends HttpServlet {
 
         try {
             int nbFilms = filmsDAO.findAll().size();
-            films = filmsDAO.findBetween((page - 1) * filmsPerPage, page * filmsPerPage);
+            films = filmsDAO.findBetween((page - 1) * filmsPerPage + 1, page * filmsPerPage + 1);
             nbPages = (int) Math.ceil(nbFilms * 1.0 / filmsPerPage);
 
             String username = (String)request.getSession().getAttribute("principal");
             User user = usersDAO.findById(username);
-            // User liked a film, adding preference to db
             if(request.getParameter("filmId") != null) {
                 int filmId = Integer.parseInt(request.getParameter("filmId"));
                 Film film = filmsDAO.findById((long)filmId);
-                Preference pref = Preference.builder().user(user).film(film).build();
+                Preference pref = Preference.builder().user(user).film(film).build();   // TODO : DOESNT WORK
                 try {
-                    preferencesDAO.create(pref);
+                    preferencesDAO.create(pref);                                        // TODO : DOESNT WORK
                 } catch (DuplicateKeyException e) {
                     e.printStackTrace();
                 }
