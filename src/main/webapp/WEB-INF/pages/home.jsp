@@ -22,7 +22,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-outline-secondary" href="film?id=${film.id}">View</a>
-                                        <a class="btn btn-sm btn-outline-secondary" href="home?page=${currentPage}&?filmId=${film.id}">Like</a>
+                                        <a class="btn btn-sm btn-outline-secondary" href="home?page=${currentPage}&filmId=${film.id}">Like</a>
                                     </div>
                                     <div>
                                         <small class="text-muted">${film.runningTime} mins</small>

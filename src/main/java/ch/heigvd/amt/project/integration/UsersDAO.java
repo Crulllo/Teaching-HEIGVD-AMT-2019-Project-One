@@ -57,7 +57,7 @@ public class UsersDAO implements IUsersDAO {
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("SELECT USERNAME, FIRST_NAME, LAST_NAME, EMAIL, IS_ADMIN FROM amt_users WHERE USERNAME = ?");
+            PreparedStatement statement = con.prepareStatement("SELECT USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN FROM amt_users WHERE USERNAME = ?");
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
@@ -69,7 +69,8 @@ public class UsersDAO implements IUsersDAO {
                     .firstName(rs.getString(2))
                     .lastName(rs.getString(3))
                     .email(rs.getString(4))
-                    .admin(Boolean.parseBoolean(rs.getString(5)))
+                    .password(rs.getString(5))
+                    .admin(Boolean.parseBoolean(rs.getString(6)))
                     .build();
             return existingUser;
         } catch (SQLException e) {
