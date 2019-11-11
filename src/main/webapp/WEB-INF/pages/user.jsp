@@ -46,7 +46,7 @@
                 <tbody>
                 <c:forEach items="${films}" var="film">
                   <tr>
-                    <th scope="row"><img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 150px; width: 100%; display: block;" src="./assets/img/${film.moviePosterPath}" ></th> <!-- film poster -->
+                    <th scope="row"><img class="card-img-top" alt="Thumbnail [100%x225]" style="height: 150px; width: 100%; display: block;" src="./assets/img/${film.moviePosterPath}" ></th>
                     <td class="card-text">${film.title}</td>
                     <td><a class="btn btn-sm btn-outline-secondary" href="film?id=${film.id}">View</a></td>
                   </tr>

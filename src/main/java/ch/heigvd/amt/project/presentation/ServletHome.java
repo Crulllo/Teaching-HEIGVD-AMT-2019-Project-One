@@ -1,6 +1,5 @@
 package ch.heigvd.amt.project.presentation;
 
-import ch.heigvd.amt.project.business.FilmsManagerLocal;
 import ch.heigvd.amt.project.datastore.exceptions.DuplicateKeyException;
 import ch.heigvd.amt.project.datastore.exceptions.KeyNotFoundException;
 import ch.heigvd.amt.project.integration.IFilmsDao;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 
