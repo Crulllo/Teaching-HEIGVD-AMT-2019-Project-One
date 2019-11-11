@@ -191,7 +191,7 @@ public class FilmsDAO implements IFilmsDao {
                         .id(Long.parseLong(rs.getString("ID")))
                         .title(rs.getString("TITLE"))
                         .runningTime(Integer.parseInt(rs.getString("RUNNING_TIME")))
-                        .moviePosterPath(rs.getString("PATH_TO_MOVIE_POSTER"))
+                        .moviePosterPath(rs.getString("PATH_TO_POSTER"))
                         .director(rs.getString("DIRECTOR"))
                         .build();
                 requestedFilms.add(existingFilm);
