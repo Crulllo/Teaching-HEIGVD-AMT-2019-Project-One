@@ -165,14 +165,14 @@ public class UsersDAO implements IUsersDAO {
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
             if (!hasRecord) {
-                throw new KeyNotFoundException("Could not find user with username = " + username);
+                return false;
             }
             String hashed = rs.getString(1);
             boolean isAdmin = Boolean.parseBoolean(rs.getString(2));
             // TODO: remettre
             return isAdmin || authenticationService.checkPassword(pass, hashed);
             //return pass.equals(hashed);
-        } catch (SQLException | KeyNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new Error(e);
         } finally {
