@@ -26,48 +26,38 @@ import java.util.List;
 public class ServletHome extends HttpServlet {
 
     @EJB
-    FilmsManagerLocal filmsManager;
+    IFilmsDao filmsDAO;
 
     @EJB
     IUsersDAO usersDAO;
-    IPreferencesDAO preferencesDAO;
 
-    final int FILMS_PER_PAGE = 8;
+    @EJB
+    IPreferencesDAO preferencesDAO;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //List<Film> films = filmsManager.getAllFilms();
-
-        List<Film> films = new LinkedList<>();
-        try {
-            films = filmsDAO.findAll();
-        } catch (KeyNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        request.setAttribute("films", films);
-        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
-      
-      /*int page = 1;
-        int nbFilmsPerPage = 8;
+        int page = 1;
         if(request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        List<Film> films = filmsManager.getFilmsBetween((page - 1) * FILMS_PER_PAGE, page * FILMS_PER_PAGE);
-        int nbFilms = filmsManager.getAllFilms().size();
-        int nbPages = (int) Math.ceil(nbFilms * 1.0 / FILMS_PER_PAGE);
+        int filmsPerPage = 8;
+        List<Film> films = null;
+        int nbPages = 0;
 
-        int filmId = 0;
         try {
+            int nbFilms = filmsDAO.findAll().size();
+            films = filmsDAO.findBetween((page - 1) * filmsPerPage, page * filmsPerPage);
+            nbPages = (int) Math.ceil(nbFilms * 1.0 / filmsPerPage);
+
             String username = (String)request.getSession().getAttribute("principal");
             User user = usersDAO.findById(username);
             // User liked a film, adding preference to db
-            if(request.getParameter("idFilm") != null) {
-                filmId = Integer.parseInt(request.getParameter("filmId"));
-                Film film = filmsManager.getFilm(filmId);
+            if(request.getParameter("filmId") != null) {
+                int filmId = Integer.parseInt(request.getParameter("filmId"));
+                Film film = filmsDAO.findById((long)filmId);
                 Preference pref = Preference.builder().user(user).film(film).build();
                 try {
                     preferencesDAO.create(pref);
@@ -75,7 +65,6 @@ public class ServletHome extends HttpServlet {
                     e.printStackTrace();
                 }
             }
-            request.setAttribute("filmId", filmId);
         } catch (KeyNotFoundException e) {
             e.printStackTrace();
         }
@@ -83,6 +72,6 @@ public class ServletHome extends HttpServlet {
         request.setAttribute("films", films);
         request.setAttribute("nbPages", nbPages);
         request.setAttribute("currentPage", page);
-        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);*/
+        request.getRequestDispatcher("/WEB-INF/pages/home.jsp").forward(request, response);
     }
 }
