@@ -42,14 +42,17 @@ public class ServletHome extends HttpServlet {
         if(request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        long filmsPerPage = 8;
+        int filmsPerPage = 8;
         List<Film> films = null;
         int nbPages = 0;
 
         try {
             int nbFilms = filmsDAO.findAll().size();
             films = filmsDAO.findFrom((page - 1) * filmsPerPage + 1, filmsPerPage);
-            nbPages = (int) Math.ceil(nbFilms * 1.0 / filmsPerPage);
+            nbPages = nbFilms / filmsPerPage;
+            if(nbFilms % filmsPerPage > 0) {
+                nbPages++;
+            }
 
             String username = (String)request.getSession().getAttribute("principal");
             User user = usersDAO.findById(username);
