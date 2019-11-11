@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // TODO:  save Error messages
 @Stateless
@@ -46,8 +48,7 @@ public class PreferencesDAO implements IPreferencesDAO {
             statement.execute();
             return preference;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            throw new DuplicateKeyException("Preference already registered");
         } finally {
             closeConnection(connection);
         }
@@ -76,11 +77,11 @@ public class PreferencesDAO implements IPreferencesDAO {
                     .build();
             return fetchedPreference;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(PreferencesDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     @Override
@@ -98,8 +99,7 @@ public class PreferencesDAO implements IPreferencesDAO {
                 throw new KeyNotFoundException("Could not find preference with film_id " + filmid + " and username " + username);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(PreferencesDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
@@ -126,11 +126,11 @@ public class PreferencesDAO implements IPreferencesDAO {
 
             return films;
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new Error(e);
+            Logger.getLogger(PreferencesDAO.class.getSimpleName()).log(Level.SEVERE, "Error", e);
         } finally {
             closeConnection(connection);
         }
+        return null;
     }
 
     private void closeConnection(Connection connection) {
