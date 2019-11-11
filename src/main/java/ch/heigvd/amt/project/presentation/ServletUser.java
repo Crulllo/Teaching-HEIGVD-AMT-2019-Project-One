@@ -26,19 +26,24 @@ public class ServletUser extends HttpServlet {
     @EJB
     IPreferencesDAO preferencesDAO;
 
+    @EJB
+    IUsersDAO usersDAO;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = (String)request.getSession().getAttribute("principal");
+        User user = null;
         List<Film> films = null;
 
         if (username == null) {
             response.sendRedirect("/login"); // Not logged in, redirect to login page.
         } else {
             try {
+                user = usersDAO.findById(username);
                 films = preferencesDAO.findAllByUsername(username);
             } catch (KeyNotFoundException e) {
                 e.printStackTrace();
             }
-
+            request.setAttribute("user", user);
             request.setAttribute("films", films);
             request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
         }
@@ -46,17 +51,19 @@ public class ServletUser extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = (String)request.getSession().getAttribute("principal");
+        User user = null;
         List<Film> films = null;
 
         if (username == null) {
             response.sendRedirect("/login"); // Not logged in, redirect to login page.
         } else {
             try {
+                user = usersDAO.findById(username);
                 films = preferencesDAO.findAllByUsername(username);
             } catch (KeyNotFoundException e) {
                 e.printStackTrace();
             }
-
+            request.setAttribute("user", user);
             request.setAttribute("films", films);
             request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
         }
