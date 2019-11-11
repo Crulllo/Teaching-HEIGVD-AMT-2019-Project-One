@@ -8,3 +8,10 @@ Once they like a movie, it's added as a preference which they should be able to 
 
 ## How
 Our application is deployed using a docker topology on a payara server, using a payara image, mysql and phpmyadmin for the database. To facilitate the execution of our application we've setup a shell script execute.sh to build and deploy our application automatically.
+
+[Business Components](docs/Business Components.md)
+[Database](docs/Database.md)
+[Integration](docs/Integration.md)
+[Performance](docs/Performance.md)
+[Presentation](docs/Presentation.md)
+[Scheme](docs/Scheme.md)
