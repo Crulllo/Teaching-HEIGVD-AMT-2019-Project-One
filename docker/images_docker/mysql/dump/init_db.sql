@@ -14,7 +14,7 @@ INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('Yo
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN) VALUES ('admin', 'admin', 'admin', 'admin@email.com', 'password', true);
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user1', 'Bob', 'Dylan', 'dylan@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user2', 'Bob', 'Hope', 'hope@email.com', 'asd');
-INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user3', 'Mickey', 'Mouse', 'mickey@email.com', 'asd');
+INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user3', 'Mickey', 'Mouse', 'mickey@email.com', 'asdw');
 
 INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (5, 'user1');
 INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (9, 'user1');
