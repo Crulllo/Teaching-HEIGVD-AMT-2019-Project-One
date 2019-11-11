@@ -7,6 +7,7 @@ import ch.heigvd.amt.project.model.Preference;
 import ch.heigvd.amt.project.model.User;
 
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -27,6 +28,12 @@ public class PreferencesDAO implements IPreferencesDAO {
     // For Wildfly (see https://docs.jboss.org/author/display/WFLY10/JNDI+Reference)
     //@Resource(lookup = "java:/jdbc/film_library")
     //DataSource dataSource;
+
+    @EJB
+    IFilmsDao filmsDao;
+
+    @EJB
+    IUsersDAO usersDAO;
 
     @Override
     public Preference create(Preference preference) throws DuplicateKeyException {
@@ -51,7 +58,7 @@ public class PreferencesDAO implements IPreferencesDAO {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_files WHERE FILM_ID=? AND USERNAME=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_preferences WHERE FILM_ID=? AND USERNAME=?");
             statement.setString(1, String.valueOf(filmId));
             statement.setString(2, username);
             ResultSet rs = statement.executeQuery();
@@ -60,9 +67,7 @@ public class PreferencesDAO implements IPreferencesDAO {
                 throw new KeyNotFoundException("Could not find Prefenrece with film_id " + filmId + " for user " + username);
             }
 
-            FilmsDAO filmsDAO = new FilmsDAO();
-            UsersDAO usersDAO = new UsersDAO();
-            Film film = filmsDAO.findById(Long.parseLong(rs.getString("FILM_ID")));
+            Film film = filmsDao.findById(Long.parseLong(rs.getString("FILM_ID")));
             User user = usersDAO.findById(rs.getString("USERNAME"));
 
             Preference fetchedPreference = Preference.builder()
@@ -83,7 +88,7 @@ public class PreferencesDAO implements IPreferencesDAO {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM amt_preferences WHERE FILM=ID=? AND USERNAME=?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM amt_preferences WHERE FILM_ID=? AND USERNAME=?");
             long filmid = preference.getFilm().getId();
             String username = preference.getUser().getUsername();
             statement.setString(1, String.valueOf(filmid));
@@ -106,18 +111,19 @@ public class PreferencesDAO implements IPreferencesDAO {
         try {
             connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM amt_preferences WHERE USERNAME=?");
+            statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
             if(!hasRecord) {
                 throw new KeyNotFoundException("Could not find any preferences for given username: " + username);
             }
             List<Film> films = new LinkedList<>();
-            FilmsDAO filmsDAO = new FilmsDAO();
 
-            while (rs.next()) {
-                Film film = filmsDAO.findById(Long.parseLong(rs.getString("FILM_ID")));
+            do {
+                Film film = filmsDao.findById(Long.parseLong(rs.getString("FILM_ID")));
                 films.add(film);
-            }
+            } while (rs.next());
+
             return films;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -14,6 +14,7 @@ class UserTest {
             .lastName("Doe")
             .email("John.Doe@email.com")
             .password("mypassword")
+            .admin(false)
             .build();
 
     assertNotNull(john);
@@ -22,6 +23,7 @@ class UserTest {
     assertEquals("Doe", john.getLastName());
     assertEquals("mypassword", john.getPassword());
     assertEquals("John.Doe@email.com", john.getEmail());
+    assertFalse(john.isAdmin());
 
   }
 }

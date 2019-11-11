@@ -12,6 +12,7 @@ CREATE TABLE `amt_users` (
     `LAST_NAME` varchar(255) NOT NULL,
     `EMAIL` varchar(255) NOT NULL,
     `HASHED_PW` char(128) NOT NULL,
+    `IS_ADMIN` boolean DEFAULT FALSE,
     PRIMARY KEY (`USERNAME`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

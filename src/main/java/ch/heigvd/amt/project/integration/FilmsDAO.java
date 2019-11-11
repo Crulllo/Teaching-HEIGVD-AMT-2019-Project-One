@@ -151,7 +151,7 @@ public class FilmsDAO implements IFilmsDao {
             }
             List<Film> existingFilms = new LinkedList<>();
 
-            while (rs.next()) {
+            do {
                 Film existingFilm = Film.builder()
                         .id(Long.parseLong(rs.getString("ID")))
                         .title(rs.getString("TITLE"))
@@ -160,7 +160,8 @@ public class FilmsDAO implements IFilmsDao {
                         .director(rs.getString("DIRECTOR"))
                         .build();
                 existingFilms.add(existingFilm);
-            }
+            } while (rs.next());
+
             return  existingFilms;
         } catch (SQLException e) {
             e.printStackTrace();

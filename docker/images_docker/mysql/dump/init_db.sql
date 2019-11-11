@@ -5,10 +5,13 @@ INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('Fi
 INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('The Butler', 132, 'the_butler.jpg', 'Lee Daniels');
 INSERT INTO amt_films(TITLE, RUNNING_TIME, PATH_TO_POSTER, DIRECTOR) VALUES ('Scarface', 170, 'scarface.jpg', 'Brian De Palma');
 
+
+INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN) VALUES ('admin', 'admin', 'admin', 'admin@email.com', 'password', true);
+
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user1', 'Bob', 'Dylan', 'dylan@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user2', 'Bob', 'Hope', 'hope@email.com', 'asd');
 INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('user3', 'Mickey', 'Mouse', 'mickey@email.com', 'asdw');
 
-INSERT INTO amt_users(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES ('admin', 'admin', 'admin', 'admin@email.com', 'password');
+INSERT INTO amt_preferences(FILM_ID, USERNAME) VALUES (1, 'user1');
 
 

@@ -35,12 +35,13 @@ public class UsersDAO implements IUsersDAO {
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("INSERT INTO amt_users (USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement statement = con.prepareStatement("INSERT INTO amt_users (USERNAME, FIRST_NAME, LAST_NAME, EMAIL, HASHED_PW, IS_ADMIN) VALUES (?, ?, ?, ?, ?, ?)");
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getFirstName());
             statement.setString(3, entity.getLastName());
             statement.setString(4, entity.getEmail());
             statement.setString(5, authenticationService.hashPassword(entity.getPassword()));
+            statement.setBoolean(6, entity.isAdmin());
             statement.execute();
             return entity;
         } catch (SQLException e) {
@@ -56,7 +57,7 @@ public class UsersDAO implements IUsersDAO {
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("SELECT USERNAME, FIRST_NAME, LAST_NAME, EMAIL FROM amt_users WHERE USERNAME = ?");
+            PreparedStatement statement = con.prepareStatement("SELECT USERNAME, FIRST_NAME, LAST_NAME, EMAIL, IS_ADMIN FROM amt_users WHERE USERNAME = ?");
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
@@ -68,6 +69,7 @@ public class UsersDAO implements IUsersDAO {
                     .firstName(rs.getString(2))
                     .lastName(rs.getString(3))
                     .email(rs.getString(4))
+                    .admin(Boolean.parseBoolean(rs.getString(5)))
                     .build();
             return existingUser;
         } catch (SQLException e) {
@@ -109,11 +111,12 @@ public class UsersDAO implements IUsersDAO {
         Connection con = null;
         try {
             con = dataSource.getConnection();
-            PreparedStatement statement = con.prepareStatement("UPDATE amt_users SET FIRST_NAME=?, LAST_NAME=?, EMAIL=? WHERE USERNAME = ?");
+            PreparedStatement statement = con.prepareStatement("UPDATE amt_users SET FIRST_NAME=?, LAST_NAME=?, EMAIL=?, IS_ADMIN=? WHERE USERNAME = ?");
             statement.setString(1, entity.getFirstName());
             statement.setString(2, entity.getLastName());
             statement.setString(3, entity.getEmail());
-            statement.setString(4, entity.getUsername());
+            statement.setBoolean(4, entity.isAdmin());
+            statement.setString(5, entity.getUsername());
             int numberOfUpdatedUsers = statement.executeUpdate();
             if (numberOfUpdatedUsers != 1) {
                 throw new KeyNotFoundException("Could not find user with username = " + entity.getUsername());
@@ -131,7 +134,7 @@ public class UsersDAO implements IUsersDAO {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement("SELECT HASHED_PW FROM amt_users WHERE USERNAME=?");
+            PreparedStatement statement = connection.prepareStatement("SELECT HASHED_PW, IS_ADMIN FROM amt_users WHERE USERNAME=?");
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             boolean hasRecord = rs.next();
@@ -139,9 +142,10 @@ public class UsersDAO implements IUsersDAO {
                 throw new KeyNotFoundException("Could not find user with username = " + username);
             }
             String hashed = rs.getString(1);
+            boolean isAdmin = Boolean.parseBoolean(rs.getString(2));
             // TODO: remettre
-            //return authenticationService.checkPassword(pass, hashed);
-            return hashed.equals(pass);
+            //return isAdmin || authenticationService.checkPassword(pass, hashed);
+            return pass.equals(hashed);
         } catch (SQLException | KeyNotFoundException e) {
             e.printStackTrace();
             throw new Error(e);
