@@ -22,7 +22,7 @@
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-outline-secondary" href="film?id=${film.id}">View</a>
-                                        <a class="btn btn-sm btn-outline-secondary">Like</a>
+                                        <a class="btn btn-sm btn-outline-secondary" href="home?page=${currentPage}&?filmId=${film.id}">Like</a>
                                     </div>
                                     <div>
                                         <small class="text-muted">${film.runningTime} mins</small>
@@ -44,7 +44,7 @@
             <ul class="pagination">
                 <!-- First page -->
                 <li class="page-item">
-                    <a class="page-link" href="home"><<</a>
+                    <a class="page-link" href="home?page=1"><<</a>
                 </li>
                 <!-- Previous page -->
                 <c:if test="${currentPage > 1}">
@@ -90,6 +90,5 @@
 <script src="./assets/popper.js"></script>
 <script src="./assets/bootstrap.js"></script>
 <script src="./assets/holder.js"></script>
-
 
 <svg xmlns="http://www.w3.org/2000/svg" width="348" height="225" viewBox="0 0 348 225" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="17" style="font-weight:bold;font-size:17pt;font-family:Arial, Helvetica, Open Sans, sans-serif">Thumbnail</text></svg></body></html>
