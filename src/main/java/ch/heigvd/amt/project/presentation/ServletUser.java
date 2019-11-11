@@ -10,11 +10,13 @@ import ch.heigvd.amt.project.model.Film;
 import ch.heigvd.amt.project.model.User;
 
 import javax.ejb.EJB;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,31 +28,26 @@ public class ServletUser extends HttpServlet {
     IPreferencesDAO preferencesDAO;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = (User)request.getSession().getAttribute("user");
+        String username = "";
+        List<Film> films = null;
 
+        if (user == null) {
+            response.sendRedirect("/login"); // Not logged in, redirect to login page.
+        } else {
+            username = user.getUsername(); // Get current username
+            try {
+                films = preferencesDAO.findAllByUsername(username);
+            } catch (KeyNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            request.setAttribute("films", films);
+            request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = "";
-        if(request.getRemoteUser() != null) {
-            username = request.getRemoteUser();
-        }
 
-        User user = null;
-        try {
-            user = usersDAO.findById(username);
-        } catch (KeyNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        List<Film> films = null;
-        try {
-            films = preferencesDAO.findAllByUsername(username);
-        } catch (KeyNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        request.setAttribute("user", user);
-        request.setAttribute("films", films);
-        request.getRequestDispatcher("/WEB-INF/pages/user.jsp").forward(request, response);
     }
 }

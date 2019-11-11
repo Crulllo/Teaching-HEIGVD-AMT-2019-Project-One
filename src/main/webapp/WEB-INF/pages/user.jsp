@@ -52,29 +52,29 @@
                 <form>
                   <div class="form-group">
                     <label for="userName">Username</label>
-                    <input type="text" class="form-control" id="userName" value="${user.username}">
+                    <input type="text" class="form-control" id="userName" disabled="disabled" value="${user.username}">
                   </div>
                   <div class="form-row">
                     <div class="col">
                       <label for="firstName">First name</label>
-                      <input type="text" class="form-control" id="firstName" value="${user.firstName}">
+                      <input type="text" class="form-control" id="firstName" disabled="disabled" value="${user.firstName}">
                     </div>
                     <div class="col">
                       <label for="lastName">Last name</label>
-                      <input type="text" class="form-control" id="lastName" value="${user.lastName}">
+                      <input type="text" class="form-control" id="lastName" disabled="disabled" value="${user.lastName}">
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="col">
                       <label for="email">Email address</label>
-                      <input type="email" class="form-control" id="email" value="${user.email}">
+                      <input type="email" class="form-control" id="email" disabled="disabled" value="${user.email}">
                     </div>
                     <div class="col">
                       <label for="password">Password</label>
-                      <input type="password" class="form-control" id="password" value="${user.password}">
+                      <input type="password" class="form-control" id="password" disabled="disabled" value="${user.password}">
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="submit" class="btn btn-primary" disabled>Update</button>
                 </form>
               </div>
             </div>
